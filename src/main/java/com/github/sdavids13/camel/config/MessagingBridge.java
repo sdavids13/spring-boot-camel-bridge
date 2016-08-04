@@ -9,7 +9,6 @@ import java.util.Map;
 public class MessagingBridge {
 
     private Map<String, String> jmsToSns = new HashMap<>();
-
     private Map<String, String> sqsToJms = new HashMap<>();
 
     public Map<String, String> getJmsToSns() {
