@@ -5,11 +5,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.HashMap;
 import java.util.Map;
 
-@ConfigurationProperties(prefix = "my")
+@ConfigurationProperties(prefix = "aws.bridge")
 public class MessagingBridge {
 
     private Map<String, String> jmsToSns = new HashMap<>();
     private Map<String, String> sqsToJms = new HashMap<>();
+    private Map<String, String> jmsToSqs = new HashMap<>();
 
     public Map<String, String> getJmsToSns() {
         return jmsToSns;
@@ -25,5 +26,13 @@ public class MessagingBridge {
 
     public void setSqsToJms(Map<String, String> sqsToJms) {
         this.sqsToJms = sqsToJms;
+    }
+
+    public Map<String, String> getJmsToSqs() {
+        return jmsToSqs;
+    }
+
+    public void setJmsToSqs(Map<String, String> jmsToSqs) {
+        this.jmsToSqs = jmsToSqs;
     }
 }

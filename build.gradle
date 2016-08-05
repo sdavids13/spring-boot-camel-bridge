@@ -3,7 +3,7 @@ import java.util.stream.Stream
 
 buildscript {
     ext {
-        springBootVersion = '1.3.5.RELEASE'
+        springBootVersion = '1.4.0.RELEASE'
     }
     repositories {
         mavenCentral()
@@ -35,6 +35,7 @@ repositories {
 
 ext {
     camelVersion = '2.17.2'
+    awsSdkVersion = '1.10.52'
 }
 
 springBoot {
@@ -44,9 +45,10 @@ springBoot {
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-actuator')
     compile("org.apache.camel:camel-spring-boot-starter:${camelVersion}")
-    compile("com.amazonaws:aws-java-sdk-sqs:1.10.52")
+    compile("com.amazonaws:aws-java-sdk-sqs:${awsSdkVersion}")
+    compile("com.amazonaws:aws-java-sdk-sns:${awsSdkVersion}")
 
-    runtime('javax.jms:jms-api')
+    runtime('org.springframework.boot:spring-boot-starter-activemq')
     runtime("org.apache.camel:camel-jms:${camelVersion}")
     runtime("org.apache.camel:camel-aws:${camelVersion}")
 
@@ -62,6 +64,6 @@ eclipse {
 }
 
 task sendMessages(type: AmazonSQSSendMessagesTask) {
-    queueName 'spring-boot-aws'
+    queueName 'spring-boot-camel-entrypoint'
     messages Stream.generate { "Message ${UUID.randomUUID()}".toString() }.limit(250)
 }
