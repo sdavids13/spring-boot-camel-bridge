@@ -20,7 +20,7 @@ public class SpringBootAwsCamelApplication extends FatJarRouter {
         });
 
         bridgeConfig.getSqsToJms().forEach((sqsChannel, jmsChannel) -> {
-            from("aws-sqs:" + sqsChannel + "?amazonSQSClient=#sqsClient&maxMessagesPerPoll=10&concurrentConsumers=1&defaultVisibilityTimeout=15").to("jms:" + jmsChannel);
+            from("aws-sqs:" + sqsChannel + "?amazonSQSClient=#sqsClient&maxMessagesPerPoll={{aws.sqs.publish.maxMessagesPerPoll}}&concurrentConsumers={{aws.sqs.publish.concurrentConsumers}}&defaultVisibilityTimeout={{aws.sqs.publish.defaultVisibilityTimeout}}").to("jms:" + jmsChannel);
         });
 
         bridgeConfig.getJmsToSqs().forEach((jmsChannel, sqsChannel) -> {
